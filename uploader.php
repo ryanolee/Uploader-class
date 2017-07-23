@@ -196,7 +196,7 @@ $(document).ready(function() {
 		}
 		
 		$to_return.="<div id='form_wrapper'><form action='".$this->upload_endpoint."' method='post' enctype='multipart/form-data' id='http_upload_form'><div class='row'><div class='six columns'><input file_no='".(string)$this->upload_id."' type='file' id='http_upload' name='http_upload' accept='".implode(",",$this->accepted_datatypes)."'></div><!--hidden input for non html5 functionality--><input type='hidden' name='file_no' value='".(string)$this->upload_id."'/><input type='hidden' name='csrf_token' value='".$this->csrf_token."'><div class='six columns'><button id='http_upload_button' upload_button_id='".(string)$this->upload_id."'>Click here to upload!</button></div></div><div class='row'><div class='twelve columns' id='input_validate_area' style='background-color:#ff4d4d;'></div></div></form><div id='post_upload_area' class='row' style='display:none'><div class='ten columns'><progress value='0' max='100' style='width:100%;height:40px;'></progress></div><div class='two columns'><button style='background-color:#ff3333' id='abort_upload_button'><font color='white'>X</font></button></div></div></div>";
-		return $to_return;// return val here¬
+		return $to_return;// return val hereÂ¬
 	}
 	/**
 	 * Original code adapted from  <a href='http://php.net/manual/en/features.file-upload.php'>here</a>
@@ -248,18 +248,6 @@ $(document).ready(function() {
 			}
 			
 		}
-		/**
-		 * Recoursivly creates dir for any path (Not made by RIZZA)
-		 * @param string $path The directory to create.
-		 * @return boolean it the path was created or not
-		 */
-		function create_path($path) {
-			
-			if (is_dir($path)) return true;
-			$prev_path = @substr($path, 0, strrpos(str_replace($path,"\\",""), '/', -2) + 1 );
-			$return = create_path($prev_path);
-			return ($return && is_writable($prev_path)) ? mkdir($path) : false;
-		}
 		//if(!headers_sent()){
 		//	header('Content-Type: application/json');
 		//}
@@ -296,8 +284,10 @@ $(document).ready(function() {
 
 		}
 		$finfo = new \finfo(FILEINFO_MIME_TYPE);
-		if (false === $ext = array_search($finfo->file($_FILES['http_upload']['tmp_name']),$this->accepted_datatypes,true)){
-			deploy_validation_response("Error: file type is invalid please upload one of the following filetypes: ".implode(", ",array_map(
+		$file_mime_type=$finfo->file($_FILES['http_upload']['tmp_name']);
+		
+		if (array_search($file_mime_type,$this->accepted_datatypes)===False){
+			deploy_validation_response("Error: file type '$file_mime_type' is invalid please upload one of the following filetypes: ".implode(", ",array_map(
 			function ($file_type){
 				if(strpos($file_type,"/")!==false){
 					$file_type=@array_pop(explode("/",$file_type));
@@ -307,11 +297,10 @@ $(document).ready(function() {
 		}
 		$path=__DIR__."/".trim($this->upload_dir,"/")."/";
 		if(!is_dir($path)){
-			mkdir($path);
+			mkdir($path, 0755, true);
 		}
 		$path_base=$path;
 		$path.= $this->file_name.".".explode(".",$_FILES["http_upload"]["name"])[1];
-		$file_mime_type=$finfo->file($_FILES['http_upload']['tmp_name']);
 		if(move_uploaded_file($_FILES["http_upload"]["tmp_name"], $path)){
 			$_SESSION["upload_handles"][$_POST["file_no"]]="";//lockout upload handler after it has served its perpose
 			clear_upload_files($path_base, $this->file_name,array_diff($this->accepted_datatypes,array($file_mime_type)));	
