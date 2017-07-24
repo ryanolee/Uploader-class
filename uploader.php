@@ -307,7 +307,7 @@ $(document).ready(function() {
 			return $file_type;
 		},$this->accepted_datatypes)));
 		}
-		$path=__DIR__."/".trim($this->upload_dir,"/")."/";
+		$path="/".trim($this->upload_dir,"/")."/";
 		if(!is_dir($path)){
 			mkdir($path, 0755, true);
 		}
