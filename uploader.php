@@ -1,10 +1,22 @@
 <?php
-// Assumed that all.php has allready been required 
+
 namespace uploader;
+/**
+* This file defines functionality for the upload class.
+* @license GPL
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License.
+*/ 
 /**
  * 
  * @author ryanolee
- * A class to allow for upload of files to specified locations on the given server. <br/>Should handle all client and severside interaction during upload of files via AJAX.<br/>This includes:<ol><li>Genaration of HTML for client.</li><li>The handling of javascript to send the ajax request to te right place and send back feedback</li><li>To store session variables so uploads can be accepted and/or validated before being places at the given directory.</li></ol>
+ * @version 1.0
+ * A class to allow for upload of files to specified locations on the given server. Should handle all client and severside interaction during upload of files via AJAX.This includes:Genaration of HTML for client.The handling of javascript to send the ajax request to te right place and send back feedback.To store session variables so uploads can be accepted and/or validated before being places at the given directory.
+ * @property string $upload_dir The directory to upload files to.
+ * @property int $upload_id A unique identifier for the class instance.
+ * @property int $upload_limit The maximum sized files can be uploaded in (in bytes.)
+ * @property string[] $accepted_datatypes The list of mime types that are acceptable for any given upload.
+ * @property string $file_name The name of the file after it has been uploaded (File extention should not be given.)
+ * @property string $upload_endpoint where the form should point to for file uploads to be allowed.
  */
 
 class upload{
