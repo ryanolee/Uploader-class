@@ -1,4 +1,4 @@
-#Uploader-class
+# Uploader-class
 
 
 ----------
@@ -48,7 +48,7 @@ The example code for this file is as follows:
  3. To store session variables so uploads can be accepted and/or validated before being placed at the given directory.
 
 	
-###Properties
+### Properties
 - *string* **\$upload_dir** The directory to upload files to.
 - *int* **\$upload_id** A unique identifier for the class instance.
 - *int* **\$upload_limit** The maximum sized files can be uploaded in (in bytes.)
@@ -57,7 +57,7 @@ The example code for this file is as follows:
    has been uploaded (File extention should not be given.)  
 - *string* **\$upload_endpoint** where the form should point to for file uploads to be allowed.
 
-#####**__construct ( \$dir\_to\_upload\_to, \$accepted\_datatypes, \$file\_name, \$upload\_endpoint, \$max\_size = 52428800 )**
+##### **__construct ( \$dir\_to\_upload\_to, \$accepted\_datatypes, \$file\_name, \$upload\_endpoint, \$max\_size = 52428800 )**
 
  *  *string* **$dir_to_upload_to** gives a specified upload directory 
  *  *string[]* **$accepted_datatypes** A list of the accepted datatypes (must be in mime format without "*" wildcards)
