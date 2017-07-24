@@ -64,4 +64,7 @@ The example code for this file is as follows:
  *  *string* **$file_name** The file name that should be held as the name of the file upon it being uploaded 
  *  *string* **$upload_endpoint** The endpoint the upload handle should try to upload information to.
  *  *number* **$max_size** maximum accepted size of file uploaded(in bytes)
+#### Things of note:
 
+ 1. File uploaded automatically overwrite other files. This is true of all defined mime types.
+ 2.  Mime-types need to be used carefully , the "*" wildcard cannot be used in any capacity. Only direct mime types can be given.
