@@ -44,7 +44,7 @@ The example code for this file is as follows:
  A class to allow for upload of files to specified locations on the given server. Should handle all client and sever side interaction during upload of files via AJAX.This includes: 
 
  1. Generation of HTML for client.
- 2. The handling of JavaScript to send the.
+ 2. The handling of JavaScript to send the file to the server.
  3. To store session variables so uploads can be accepted and/or validated before being placed at the given directory.
 
 	
