@@ -10,7 +10,7 @@ namespace uploader;
  * @var bool
  * Set the debugging constant to true if you are getting error messages or uploads are failing
  */
-define("DEBUGGING",true);
+define("DEBUGGING",false);
  
 /**
  * 
