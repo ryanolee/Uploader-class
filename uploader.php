@@ -89,6 +89,7 @@ class upload{
     });
 })(jQuery);
 $(document).ready(function() {
+	\$(\"form[id='http_upload_form']\").each(function(){\$(this).append(\"<input type='hidden' name='js_enabled' value='yes'>\")});
 	window.upload_handles=[];//list of identifying DOM objects that can,in turn, lead to all relavent information on the upload being found.
     function handle_file_button_click(upload_button,called) {
             upload_button=upload_button||this;//Make upload_button optional so that the script can be passed a upload button argument
@@ -308,7 +309,7 @@ $(document).ready(function() {
 			deploy_validation_response("Error: file type '$file_mime_type' is invalid please upload one of the following filetypes: ".implode(", ",array_map(
 			function ($file_type){
 				if(strpos($file_type,"/")!==false){
-					$file_type=@array_pop(explode("/",$file_type));
+					$file_type=explode("/",$file_type)[1];
 				}
 			return $file_type;
 		},$this->accepted_datatypes)));
@@ -385,6 +386,26 @@ function handle_upload(){
 * @param bool $valid if the response is valid or not.
 */
 function deploy_validation_response($message,$valid=false){
+	if(!isset($_POST["js_enabled"])){//if js not enabled
+		$colour=$valid?"#33cc33":"#ff4d4d";
+		echo "
+		<html>
+			<head>
+			</head>
+			<body>
+				<h1>Upload status:</h1>
+				<hr/>
+				<p style='background-color:$colour'>
+					$message
+				</p>
+				".
+				(isset($_SERVER["HTTP_REFERER"])?"<a href='".$_SERVER["HTTP_REFERER"]."'>click here</a> to go back.":"")
+				."
+			</body>
+		</html>
+		";
+		exit();
+	}
 	header('Content-Type: application/json');
 	echo json_encode(array("message"=>$message,"valid"=>$valid));
 	exit();
