@@ -10,7 +10,7 @@ namespace uploader;
  * @var bool
  * Set the debugging constant to true if you are getting error messages or uploads are failing
  */
-define("DEBUGGING",false);
+define("DEBUGGING",true);
  
 /**
  * 
@@ -320,7 +320,8 @@ $(document).ready(function() {
 			mkdir($path, 0755, true);
 		}
 		$path_base=$path;
-		$path.= $this->file_name.".".explode(".",$_FILES["http_upload"]["name"])[1];
+
+		$path.= $this->file_name.".".array_slice(explode(".",$_FILES["http_upload"]["name"]), -1, 1)[0];
 		if(move_uploaded_file($_FILES["http_upload"]["tmp_name"], $path)){
 			$_SESSION["upload_handles"][$_POST["file_no"]]="";//lockout upload handler after it has served its perpose
 			clear_upload_files($path_base, $this->file_name,array_diff($this->accepted_datatypes,array($file_mime_type)));	
