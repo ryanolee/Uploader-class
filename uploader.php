@@ -5,7 +5,13 @@ namespace uploader;
 * This file defines functionality for the upload class.
 * @license GPL
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License.
-*/ 
+*/
+/**
+ * @var bool
+ * Set the debugging constant to true if you are getting error messages or uploads are failing
+ */
+define("DEBUGGING",true);
+ 
 /**
  * 
  * @author ryanolee
@@ -307,8 +313,9 @@ $(document).ready(function() {
 			return $file_type;
 		},$this->accepted_datatypes)));
 		}
-		$path="/".trim($this->upload_dir,"/")."/";
+		$path=$this->upload_dir;
 		if(!is_dir($path)){
+			
 			mkdir($path, 0755, true);
 		}
 		$path_base=$path;
@@ -334,6 +341,9 @@ $(document).ready(function() {
  * Call when upload requests need to be handled
  */
 function handle_upload(){
+	if(!DEBUGGING){
+		error_reporting(0);//turn off error reporting at this point
+	}
 	if(session_status() == PHP_SESSION_NONE){//call handle session so session data on file handles can be obtained can be retrieved.
 		if(!session_start()){
 			deploy_validation_response("Error: Session unable to start check that cookies are enabled.");
@@ -359,7 +369,15 @@ function handle_upload(){
 	if(!$file_handle){
 		deploy_validation_response("Error: File handle currupt or missing please refresh the page.");
 	}
+	if(DEBUGGING){
+		set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+			deploy_validation_response("Debug data:<br/>Error: $errstr<br/>Error code: $errno<br/>Error file: $errfile on line $errline<br/>");
+		});
+	}
 	$file_handle->receive_upload();
+	if(DEBUGGING){
+		restore_error_handler();
+	}
 };
 /**
 * This function deploys vaidation responses to AJAX calls made by the client side form.
