@@ -67,4 +67,5 @@ The example code for this file is as follows:
 #### Things of note:
 
  1. File uploaded automatically overwrite other files. This is true of all defined mime types.
- 2.  Mime-types need to be used carefully , the "*" wildcard cannot be used in any capacity. Only direct mime types can be given.
+ 2. Mime-types need to be used carefully , the "*" wildcard cannot be used in any capacity. Only direct mime types can be given.
+ 3. The php_fileinfo extention needs to be enabled.

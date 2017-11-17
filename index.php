@@ -3,7 +3,7 @@
 
 <?php
 //First we require our uploader class
-require("/uploader.php");
+require(__DIR__."/uploader.php");
 //Then we create a new instance of the uploader class
 $upload=new \uploader\upload(__DIR__."/uploads/",array("image/png","image/jpeg"),"test1","next.php");
 //finally we get the html for that segment
